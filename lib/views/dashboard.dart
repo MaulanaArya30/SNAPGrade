@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:snapgrade/views/new_quiz.dart';
 import 'package:snapgrade/views/widgets/dashboardwidget.dart';
 
 class DashboardPage extends StatelessWidget {
@@ -34,7 +35,14 @@ class DashboardPage extends StatelessWidget {
       floatingActionButton: Padding(
         padding: const EdgeInsets.only(bottom: 128, right: 20),
         child: FloatingActionButton.extended(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => NewquizPage(),
+              ),
+            );
+          },
           label: const Row(
             children: [
               Icon(
