@@ -17,9 +17,9 @@ class _PeriksajawabanPageState extends State<PeriksajawabanPage> {
   bool imageLoaded = false;
 
   Future<void> _pickImage() async {
-    final ImagePicker _picker = ImagePicker();
+    final ImagePicker picker = ImagePicker();
     final XFile? pickedFile =
-        await _picker.pickImage(source: ImageSource.gallery);
+        await picker.pickImage(source: ImageSource.gallery);
 
     if (pickedFile != null) {
       setState(() {
@@ -35,7 +35,7 @@ class _PeriksajawabanPageState extends State<PeriksajawabanPage> {
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) {
-        return AlertDialog(
+        return const AlertDialog(
           backgroundColor: Colors.white,
           content: Column(
             mainAxisSize: MainAxisSize.min,
@@ -63,7 +63,7 @@ class _PeriksajawabanPageState extends State<PeriksajawabanPage> {
         );
       },
     );
-    await Future.delayed(Duration(seconds: 3));
+    await Future.delayed(const Duration(seconds: 3));
 
     Navigator.pop(context);
 
@@ -79,7 +79,7 @@ class _PeriksajawabanPageState extends State<PeriksajawabanPage> {
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text(
+              const Text(
                 'Memeriksa Jawaban...',
                 style: TextStyle(
                   color: Colors.black,
@@ -91,14 +91,14 @@ class _PeriksajawabanPageState extends State<PeriksajawabanPage> {
               Text(
                 score.toString(),
                 textAlign: TextAlign.center,
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.black,
                   fontSize: 90,
                   fontFamily: 'Montserrat',
                   fontWeight: FontWeight.w700,
                 ),
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               InkWell(
                 onTap: () {
                   Navigator.pop(context);
@@ -107,12 +107,12 @@ class _PeriksajawabanPageState extends State<PeriksajawabanPage> {
                   width: 209,
                   height: 40,
                   decoration: ShapeDecoration(
-                    color: Color(0xFF5A5F73),
+                    color: const Color(0xFF5A5F73),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30),
                     ),
                   ),
-                  child: Center(
+                  child: const Center(
                     child: Text(
                       'Kembali',
                       style: TextStyle(
@@ -141,9 +141,9 @@ class _PeriksajawabanPageState extends State<PeriksajawabanPage> {
           color: Colors.white,
           child: Column(
             children: [
-              TopBar(),
-              SizedBox(height: 64),
-              Text(
+              const TopBar(),
+              const SizedBox(height: 64),
+              const Text(
                 'Periksa Jawaban',
                 textAlign: TextAlign.center,
                 style: TextStyle(
@@ -153,9 +153,9 @@ class _PeriksajawabanPageState extends State<PeriksajawabanPage> {
                   fontWeight: FontWeight.w700,
                 ),
               ),
-              SizedBox(height: 40),
-              _image == null ? Text('') : Image.file(_image!),
-              SizedBox(height: 20),
+              const SizedBox(height: 40),
+              _image == null ? const Text('') : Image.file(_image!),
+              const SizedBox(height: 20),
               !imageLoaded
                   ? CircleButton(
                       title: 'Unggah Jababan',
@@ -167,12 +167,12 @@ class _PeriksajawabanPageState extends State<PeriksajawabanPage> {
                         width: 180,
                         height: 48,
                         decoration: ShapeDecoration(
-                          color: Color(0xFF424C71),
+                          color: const Color(0xFF424C71),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(30),
                           ),
                         ),
-                        child: Center(
+                        child: const Center(
                           child: Text(
                             'PERIKSA',
                             style: TextStyle(

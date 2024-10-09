@@ -16,15 +16,15 @@ class DashboardPage extends StatelessWidget {
           children: [
             Image.asset('assets/logonotext.png'),
             const SizedBox(height: 38),
-            DashboardWidget(
+            const DashboardWidget(
               title: 'Ulanngan Harian 1',
               kelas: '1C',
             ),
-            DashboardWidget(
+            const DashboardWidget(
               title: 'Kuis 1',
               kelas: '3B',
             ),
-            DashboardWidget(
+            const DashboardWidget(
               title: 'Ujian Tengah Semester',
               kelas: '2A',
             ),
@@ -35,7 +35,7 @@ class DashboardPage extends StatelessWidget {
         padding: const EdgeInsets.only(bottom: 128, right: 20),
         child: FloatingActionButton.extended(
           onPressed: () {},
-          label: Row(
+          label: const Row(
             children: [
               Icon(
                 Icons.add,
@@ -49,7 +49,7 @@ class DashboardPage extends StatelessWidget {
               ),
             ],
           ),
-          backgroundColor: Color(0XFF424D72),
+          backgroundColor: const Color(0XFF424D72),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(30),
           ),

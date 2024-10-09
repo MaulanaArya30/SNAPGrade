@@ -23,7 +23,7 @@ class CircleButton extends StatelessWidget {
             child: Container(
               width: 80,
               height: 80,
-              decoration: ShapeDecoration(
+              decoration: const ShapeDecoration(
                 color: Color(0xFF424C71),
                 shape: OvalBorder(),
               ),
@@ -38,7 +38,7 @@ class CircleButton extends StatelessWidget {
             textAlign: TextAlign.center,
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.black,
               fontSize: 16,
               fontFamily: 'Montserrat',

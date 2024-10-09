@@ -14,7 +14,7 @@ class BuatkunciPage extends StatelessWidget {
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text(
+              const Text(
                 'Kunci terunggah',
                 style: TextStyle(
                   color: Colors.black,
@@ -35,12 +35,12 @@ class BuatkunciPage extends StatelessWidget {
                   width: 209,
                   height: 40,
                   decoration: ShapeDecoration(
-                    color: Color(0xFF5A5F73),
+                    color: const Color(0xFF5A5F73),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30),
                     ),
                   ),
-                  child: Center(
+                  child: const Center(
                     child: Text(
                       'Kembali',
                       style: TextStyle(
@@ -67,9 +67,9 @@ class BuatkunciPage extends StatelessWidget {
         color: Colors.white,
         child: Column(
           children: [
-            TopBar(),
-            SizedBox(height: 64),
-            Text(
+            const TopBar(),
+            const SizedBox(height: 64),
+            const Text(
               'Buat Kunci',
               style: TextStyle(
                 color: Colors.black,
@@ -78,7 +78,7 @@ class BuatkunciPage extends StatelessWidget {
                 fontWeight: FontWeight.w700,
               ),
             ),
-            SizedBox(height: 40),
+            const SizedBox(height: 40),
             CircleButton(
               title: 'Unggah Kunci',
               icon: Image.asset('assets/upload.png'),

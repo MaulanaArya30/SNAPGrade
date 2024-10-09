@@ -22,15 +22,15 @@ class DashboardWidget extends StatelessWidget {
             flex: 1,
             child: Container(
               height: 80,
-              color: Color(0XFF424D72),
+              color: const Color(0XFF424D72),
             ),
           ),
           Expanded(
             flex: 34,
             child: Container(
-              padding: EdgeInsets.all(20),
+              padding: const EdgeInsets.all(20),
               height: 80,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: Color(0XFFEDEEF0),
                 borderRadius: BorderRadius.only(
                   topRight: Radius.circular(10),
@@ -45,7 +45,7 @@ class DashboardWidget extends StatelessWidget {
                     children: [
                       Text(
                         title,
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.black,
                           fontFamily: 'Montserrat',
                           fontSize: 16,
@@ -54,7 +54,7 @@ class DashboardWidget extends StatelessWidget {
                       ),
                       Text(
                         'Kelas : $kelas',
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.black,
                           fontFamily: 'Montserrat',
                           fontSize: 12,
@@ -62,7 +62,7 @@ class DashboardWidget extends StatelessWidget {
                       ),
                     ],
                   ),
-                  Icon(
+                  const Icon(
                     Icons.arrow_forward_ios,
                     color: Colors.black,
                   ),

@@ -10,7 +10,7 @@ class TopBar extends StatelessWidget {
     return Container(
       height: 100,
       width: double.infinity,
-      color: Color(0xFF424D72),
+      color: const Color(0xFF424D72),
       padding: const EdgeInsets.fromLTRB(28, 32, 28, 32),
       child: Row(
         children: [
@@ -18,13 +18,13 @@ class TopBar extends StatelessWidget {
             onPressed: () {
               Navigator.pop(context);
             },
-            icon: Icon(
+            icon: const Icon(
               Icons.arrow_back_ios,
               color: Colors.white,
               size: 24,
             ),
           ),
-          Text(
+          const Text(
             "Kembali",
             style: TextStyle(
               color: Colors.white,

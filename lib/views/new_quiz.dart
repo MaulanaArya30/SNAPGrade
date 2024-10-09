@@ -19,7 +19,7 @@ class _NeqQuizPageState extends State<NewquizPage> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            TopBar(),
+            const TopBar(),
             Container(
               height: 800,
               width: double.infinity,
@@ -28,7 +28,7 @@ class _NeqQuizPageState extends State<NewquizPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  const Text(
                     'Nama Kuis',
                     style: TextStyle(
                       color: Colors.black,
@@ -41,9 +41,9 @@ class _NeqQuizPageState extends State<NewquizPage> {
                   TextField(
                     decoration: InputDecoration(
                       filled: true,
-                      fillColor: Color(0xFFEDEEEF),
+                      fillColor: const Color(0xFFEDEEEF),
                       hintText: 'Nama Kuis',
-                      hintStyle: TextStyle(
+                      hintStyle: const TextStyle(
                         fontSize: 16,
                         fontFamily: 'Montserrat',
                       ),
@@ -53,7 +53,7 @@ class _NeqQuizPageState extends State<NewquizPage> {
                     ),
                   ),
                   const SizedBox(height: 16),
-                  Text(
+                  const Text(
                     'Kelas',
                     style: TextStyle(
                       color: Colors.black,
@@ -66,9 +66,9 @@ class _NeqQuizPageState extends State<NewquizPage> {
                   TextField(
                     decoration: InputDecoration(
                       filled: true,
-                      fillColor: Color(0xFFEDEEEF),
+                      fillColor: const Color(0xFFEDEEEF),
                       hintText: 'Kelas',
-                      hintStyle: TextStyle(
+                      hintStyle: const TextStyle(
                         fontSize: 16,
                         fontFamily: 'Montserrat',
                       ),
@@ -78,7 +78,7 @@ class _NeqQuizPageState extends State<NewquizPage> {
                     ),
                   ),
                   const SizedBox(height: 16),
-                  Text(
+                  const Text(
                     'Jumlah Pertanyaan',
                     style: TextStyle(
                       color: Colors.black,
@@ -91,9 +91,9 @@ class _NeqQuizPageState extends State<NewquizPage> {
                   TextField(
                     decoration: InputDecoration(
                       filled: true,
-                      fillColor: Color(0xFFEDEEEF),
+                      fillColor: const Color(0xFFEDEEEF),
                       hintText: 'Jumlah Pertanyaan',
-                      hintStyle: TextStyle(
+                      hintStyle: const TextStyle(
                         fontSize: 16,
                         fontFamily: 'Montserrat',
                       ),
@@ -116,7 +116,7 @@ class _NeqQuizPageState extends State<NewquizPage> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => BuatkunciPage()),
+                                builder: (context) => const BuatkunciPage()),
                           );
                         },
                       ),
@@ -130,7 +130,7 @@ class _NeqQuizPageState extends State<NewquizPage> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => PeriksajawabanPage()),
+                                builder: (context) => const PeriksajawabanPage()),
                           );
                         },
                       ),
