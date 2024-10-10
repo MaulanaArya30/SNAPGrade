@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:snapgrade/views/buat_kunci.dart';
 import 'package:snapgrade/views/periksa_jawaban.dart';
 import 'package:snapgrade/views/widgets/circlebutton.dart';
 import 'package:snapgrade/views/widgets/topbar.dart';
+import 'dart:typed_data';
 
 class NewquizPage extends StatefulWidget {
   const NewquizPage({super.key});
@@ -13,6 +13,39 @@ class NewquizPage extends StatefulWidget {
 }
 
 class _NeqQuizPageState extends State<NewquizPage> {
+  Uint8List? masterImage;
+
+  Future<void> navigateToMasterPage() async {
+    final result = await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => BuatkunciPage(),
+      ),
+    );
+    if (result != null) {
+      setState(() {
+        masterImage = result;
+      });
+    }
+  }
+
+  void navigateToStudentPage() {
+    if (masterImage == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Tolong Unggah Kunci Jawaban'),
+        ),
+      );
+    } else {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => PeriksajawabanPage(masterImage: masterImage!),
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -112,13 +145,7 @@ class _NeqQuizPageState extends State<NewquizPage> {
                           'assets/key.png',
                           width: double.infinity,
                         ),
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const BuatkunciPage()),
-                          );
-                        },
+                        onPressed: navigateToMasterPage,
                       ),
                       CircleButton(
                         title: 'Periksa Jawaban',
@@ -126,13 +153,16 @@ class _NeqQuizPageState extends State<NewquizPage> {
                           'assets/scan.png',
                           width: double.infinity,
                         ),
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const PeriksajawabanPage()),
-                          );
-                        },
+                        onPressed: masterImage != null
+                            ? navigateToStudentPage
+                            : () {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(
+                                        'Tolong Buat Kunci Jawaban Sebelum Periksa Jawaban'),
+                                  ),
+                                );
+                              },
                       ),
                     ],
                   ),

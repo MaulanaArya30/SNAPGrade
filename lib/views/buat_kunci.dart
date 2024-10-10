@@ -1,9 +1,28 @@
+import 'dart:typed_data';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:snapgrade/views/widgets/circlebutton.dart';
 import 'package:snapgrade/views/widgets/topbar.dart';
 
-class BuatkunciPage extends StatelessWidget {
+class BuatkunciPage extends StatefulWidget {
   const BuatkunciPage({super.key});
+
+  @override
+  State<BuatkunciPage> createState() => _BuatkunciPageState();
+}
+
+class _BuatkunciPageState extends State<BuatkunciPage> {
+  Uint8List? masterImage;
+
+  Future<void> pickMasterImage() async {
+    FilePickerResult? result =
+        await FilePicker.platform.pickFiles(type: FileType.image);
+    if (result != null && result.files.single.bytes != null) {
+      setState(() {
+        masterImage = result.files.single.bytes;
+      });
+    }
+  }
 
   Future<dynamic> kunciTerunggah(BuildContext context) {
     return showDialog(
@@ -14,8 +33,11 @@ class BuatkunciPage extends StatelessWidget {
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Text(
-                'Kunci terunggah',
+              Text(
+                textAlign: TextAlign.center,
+                masterImage != null
+                    ? 'Kunci terunggah'
+                    : 'Kunci gagal terunggah',
                 style: TextStyle(
                   color: Colors.black,
                   fontSize: 24,
@@ -23,13 +45,20 @@ class BuatkunciPage extends StatelessWidget {
                   fontWeight: FontWeight.w700,
                 ),
               ),
-              Image.asset(
-                'assets/checklist.png',
-                width: 100,
-              ),
+              masterImage != null
+                  ? Image.asset(
+                      'assets/checklist.png',
+                      width: 100,
+                    )
+                  : Container(),
               InkWell(
                 onTap: () {
-                  Navigator.pop(context);
+                  if (masterImage != null) {
+                    Navigator.pop(context);
+                    Navigator.pop(context, masterImage);
+                  } else {
+                    Navigator.pop(context);
+                  }
                 },
                 child: Container(
                   width: 209,
@@ -82,7 +111,8 @@ class BuatkunciPage extends StatelessWidget {
             CircleButton(
               title: 'Unggah Kunci',
               icon: Image.asset('assets/upload.png'),
-              onPressed: () {
+              onPressed: () async {
+                await pickMasterImage();
                 kunciTerunggah(context);
               },
             ),

@@ -4,27 +4,94 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:snapgrade/views/widgets/circlebutton.dart';
 import 'package:snapgrade/views/widgets/topbar.dart';
+import 'dart:typed_data';
+import 'package:flutter/material.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+
+import 'package:http_parser/http_parser.dart';
+import 'package:snapgrade/views/splash.dart';
 
 class PeriksajawabanPage extends StatefulWidget {
-  const PeriksajawabanPage({super.key});
+  final Uint8List masterImage;
+  PeriksajawabanPage({super.key, required this.masterImage});
 
   @override
   State<PeriksajawabanPage> createState() => _PeriksajawabanPageState();
 }
 
 class _PeriksajawabanPageState extends State<PeriksajawabanPage> {
-  File? _image;
+  Uint8List? studentImage;
+  String responseMessage = '';
+  Uint8List? decodedImage;
   bool imageLoaded = false;
+  File? _image;
 
   Future<void> _pickImage() async {
-    final ImagePicker picker = ImagePicker();
-    final XFile? pickedFile =
-        await picker.pickImage(source: ImageSource.gallery);
-
-    if (pickedFile != null) {
+    FilePickerResult? result =
+        await FilePicker.platform.pickFiles(type: FileType.image);
+    if (result != null && result.files.single.bytes != null) {
       setState(() {
-        _image = File(pickedFile.path);
+        studentImage = result.files.single.bytes;
+        _image = File(result.files.single.path!);
         imageLoaded = true;
+      });
+    }
+  }
+
+  Future<void> submitImages() async {
+    if (studentImage == null) {
+      setState(() {
+        responseMessage = "Please upload the student image.";
+      });
+      return;
+    }
+
+    var request = http.MultipartRequest(
+      'POST',
+      Uri.parse('http://127.0.0.1:5000/process-circles'),
+    );
+
+    request.files.add(http.MultipartFile.fromBytes(
+      'master_sheet',
+      widget.masterImage,
+      filename: 'master_sheet.jpg',
+      contentType: MediaType('image', 'jpeg'),
+    ));
+
+    request.files.add(http.MultipartFile.fromBytes(
+      'student_answer',
+      studentImage!,
+      filename: 'student_answer.jpg',
+      contentType: MediaType('image', 'jpeg'),
+    ));
+
+    try {
+      var streamedResponse = await request.send();
+      if (streamedResponse.statusCode == 200) {
+        var response = await http.Response.fromStream(streamedResponse);
+        var data = json.decode(response.body);
+
+        // Decode the Base64 image from 'student_answer_key'
+        String base64Image = data['student_answer_key'];
+        Uint8List decodedBytes = base64Decode(base64Image);
+
+        setState(() {
+          responseMessage =
+              'Score: ${data['score']}, Total Questions: ${data['total_questions']}, Mistakes: ${data['mistakes']}, Time: ${data['time']} seconds';
+          decodedImage = decodedBytes;
+        });
+
+        showScore(context, data['score']);
+      } else {
+        setState(() {
+          responseMessage = 'Failed to upload images.';
+        });
+      }
+    } catch (e) {
+      setState(() {
+        responseMessage = 'Error: $e';
       });
     }
   }
@@ -65,9 +132,9 @@ class _PeriksajawabanPageState extends State<PeriksajawabanPage> {
     );
     await Future.delayed(const Duration(seconds: 3));
 
-    Navigator.pop(context);
+    await submitImages();
 
-    showScore(context, 80);
+    Navigator.pop(context);
   }
 
   void showScore(BuildContext context, int score) {
