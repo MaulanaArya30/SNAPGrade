@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'dart:io' as io; 
+import 'dart:io' as io;
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -43,12 +43,13 @@ class _PeriksajawabanPageState extends State<PeriksajawabanPage> {
   // }
 
   Future<void> _pickImage() async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles(type: FileType.image);
-    
+    FilePickerResult? result =
+        await FilePicker.platform.pickFiles(type: FileType.image);
+
     if (result != null) {
       setState(() {
         studentImage = result.files.single.bytes;
-        
+
         // On mobile platforms, set the File path
         if (!kIsWeb) {
           _image = io.File(result.files.single.path!);
@@ -58,7 +59,6 @@ class _PeriksajawabanPageState extends State<PeriksajawabanPage> {
       });
     }
   }
-
 
   Future<void> submitImages() async {
     if (studentImage == null) {
@@ -150,69 +150,80 @@ class _PeriksajawabanPageState extends State<PeriksajawabanPage> {
         );
       },
     );
-    await Future.delayed(const Duration(seconds: 3));
-
-    await submitImages();
+    await Future.delayed(const Duration(seconds: 1));
 
     Navigator.pop(context);
+
+    await submitImages();
   }
 
   void showScore(BuildContext context, int score) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return AlertDialog(
-          backgroundColor: Colors.white,
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const Text(
-                'Memeriksa Jawaban...',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 20,
-                  fontFamily: 'Montserrat',
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-              Text(
-                score.toString(),
-                textAlign: TextAlign.center,
-                style: const TextStyle(
-                  color: Colors.black,
-                  fontSize: 90,
-                  fontFamily: 'Montserrat',
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-              const SizedBox(height: 16),
-              InkWell(
-                onTap: () {
-                  Navigator.pop(context);
-                },
-                child: Container(
-                  width: 209,
-                  height: 40,
-                  decoration: ShapeDecoration(
-                    color: const Color(0xFF5A5F73),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
-                    ),
+        return SingleChildScrollView(
+          child: AlertDialog(
+            backgroundColor: Colors.white,
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Text(
+                  'Nilai',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 20,
+                    fontFamily: 'Montserrat',
+                    fontWeight: FontWeight.w700,
                   ),
-                  child: const Center(
-                    child: Text(
-                      'Kembali',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                        fontFamily: 'Montserrat',
-                        fontWeight: FontWeight.w700,
+                ),
+                imageLoaded
+                    ? ConstrainedBox(
+                        constraints: const BoxConstraints(
+                          maxHeight: 500,
+                          maxWidth: double.infinity,
+                        ),
+                        child: Image.memory(decodedImage!),
+                      )
+                    : const Text(''),
+                Text(
+                  score.toString(),
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    color: Colors.black,
+                    fontSize: 40,
+                    fontFamily: 'Montserrat',
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+                const SizedBox(height: 12),
+                InkWell(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: Container(
+                    width: 209,
+                    height: 40,
+                    decoration: ShapeDecoration(
+                      color: const Color(0xFF5A5F73),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                    ),
+                    child: const Center(
+                      child: Text(
+                        'Kembali',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontFamily: 'Montserrat',
+                          fontWeight: FontWeight.w700,
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         );
       },
@@ -249,31 +260,43 @@ class _PeriksajawabanPageState extends State<PeriksajawabanPage> {
                       icon: Image.asset('assets/upload.png'),
                       onPressed: _pickImage,
                     )
-                  : InkWell(
-                      child: Container(
-                        width: 180,
-                        height: 48,
-                        decoration: ShapeDecoration(
-                          color: const Color(0xFF424C71),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30),
+                  : Column(
+                      children: [
+                        ConstrainedBox(
+                          constraints: const BoxConstraints(
+                            maxHeight: 500,
+                            maxWidth: double.infinity,
                           ),
+                          child: Image.memory(studentImage!),
                         ),
-                        child: const Center(
-                          child: Text(
-                            'PERIKSA',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 18,
-                              fontFamily: 'Montserrat',
-                              fontWeight: FontWeight.w500,
+                        const SizedBox(height: 20),
+                        InkWell(
+                          child: Container(
+                            width: 180,
+                            height: 48,
+                            decoration: ShapeDecoration(
+                              color: const Color(0xFF424C71),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                            ),
+                            child: const Center(
+                              child: Text(
+                                'PERIKSA',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 18,
+                                  fontFamily: 'Montserrat',
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
                             ),
                           ),
+                          onTap: () {
+                            matchAnswer(context);
+                          },
                         ),
-                      ),
-                      onTap: () {
-                        matchAnswer(context);
-                      },
+                      ],
                     ),
             ],
           ),
