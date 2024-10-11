@@ -1,5 +1,7 @@
 import 'dart:io';
+import 'dart:io' as io; 
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:snapgrade/views/widgets/circlebutton.dart';
@@ -28,17 +30,35 @@ class _PeriksajawabanPageState extends State<PeriksajawabanPage> {
   bool imageLoaded = false;
   File? _image;
 
+  // Future<void> _pickImage() async {
+  //   FilePickerResult? result =
+  //       await FilePicker.platform.pickFiles(type: FileType.image);
+  //   if (result != null && result.files.single.bytes != null) {
+  //     setState(() {
+  //       studentImage = result.files.single.bytes;
+  //       _image = File(result.files.single.path!);
+  //       imageLoaded = true;
+  //     });
+  //   }
+  // }
+
   Future<void> _pickImage() async {
-    FilePickerResult? result =
-        await FilePicker.platform.pickFiles(type: FileType.image);
-    if (result != null && result.files.single.bytes != null) {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(type: FileType.image);
+    
+    if (result != null) {
       setState(() {
         studentImage = result.files.single.bytes;
-        _image = File(result.files.single.path!);
+        
+        // On mobile platforms, set the File path
+        if (!kIsWeb) {
+          _image = io.File(result.files.single.path!);
+        }
+
         imageLoaded = true;
       });
     }
   }
+
 
   Future<void> submitImages() async {
     if (studentImage == null) {
